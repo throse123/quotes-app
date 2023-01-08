@@ -1,4 +1,5 @@
 import random
+
 quote_storage = {
   "Motiv": ["Moti1", "Moti2", "Moti3", "Moti4", "Moti5"],
   "Fun": ["Fun1", "Fun2", "Fun3", "Fun4", "Fun5"],
@@ -8,7 +9,11 @@ quote_storage = {
 quote_saved = {
   "Liked": [],
   "Disliked" : [],
-  "Favorited":[]
+  "Favorited":[],
+  "Motiv": [],
+  "Fun": [],
+  "Love": [],
+  "Custom": []
 }
 
 accounts = []
@@ -49,6 +54,7 @@ def createAcc():# create your account
   password = input('Password:')
   account_list = Account(username,password)
   accounts.append(account_list)
+  main()
 
 def login(): # feature to log you into the account
   global name
@@ -59,6 +65,7 @@ def login(): # feature to log you into the account
       if accounts[i].password == password:
         name = accounts[i]
         print("Success")
+        main()
         break
       else:
         print("Error, wrong password")
@@ -94,19 +101,46 @@ def quote_display():
   print("")
   quote_action()
 
+def create_quote():
+  print("")
+  print("Welcome to QuotableCreate!")
+  print("Categories: 1. Motivation | 2. Fun | 3. Love | 4. Custom")
+  cat_sel = input("What category is your Quotable?")
+  quote_text = input("Type in your quote:")
+  if cat_sel == '1':
+    quote_saved['Motiv'] += [quote_text]
+    print("Now that's Quotable!")
+  if cat_sel == '2':
+    quote_saved['Fun'] += [quote_text]
+    print("Now that's Quotable!")
+  if cat_sel == '3':
+    quote_saved['Love'] += [quote_text]
+    print("Now that's Quotable!")
+  if cat_sel == '4':
+    custom_cat = input("Name of new category?")
+    quote_saved['Custom'] += [[quote_text,custom_cat]]
+    print("Now that's Quotable!")
+
 def menu():
   global name
+  print("1. Create account | 2. Login")
+  choice = input("What would you like to do?")
+  if choice == '1':
+    createAcc()
+  if choice == '2':
+    login()
+menu()
+
+def main():
   while True:
-    print("1. Create account | 2. Login | 3. Delete Account | 4. Feed ")
+    print("Logged in, welcome! 1. Feed | 2. Create Quotes | 3. Delete Account | 4. Account Options ")
     choice = input("What would you like to do?")
     if choice == '1':
-      createAcc()
+      quote_display()
     if choice == '2':
-      login()
+      create_quote
     if choice == '3':
       del_Acc()
     if choice == '4':
-      quote_display()
-    if choice == '5':
       print("accounts:", accounts)
-menu()
+main()
