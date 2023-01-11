@@ -16,6 +16,11 @@ quote_saved = {
   "Custom": []
 }
 
+account_store = {
+  "Accounts": [],
+  "Passwords": [],
+}
+
 accounts = []
 name = None
 user_quotes = []
@@ -24,30 +29,12 @@ class Account:
   def __init__(self, username, password):
     self.username = username
     self.password = password
-    self.moti_pref = 0
-    self.fun_pref = 0
-    self.love_pref = 0
 
-  def moti_inc(self): #increase motivational quote preference
-    self.moti_pref += 1
-  def moti_dec(self):#decrease motivational quote preference
-    self.moti_pref -= 1
-  def fun_inc(self):#increase fun quote preference
-    self.fun_pref += 1
-  def fun_dec(self):#decrease fun quote preference
-    self.fun_pref -= 1
-  def love_inc(self):#increase love quote preference
-    self.love_pref += 1
-  def love_dec(self):#decrease love quote preference
-    self.love_pref -= 1
 
 class QuoteCreate:
   def __init__(self, quote, category):
     self.quote = quote
     self.category = category
-def main():
-  pass
-main()
 
 def createAcc():# create your account
   username = input('Username:')
@@ -66,7 +53,7 @@ def login(): # feature to log you into the account
         name = accounts[i]
         print("Success")
         main()
-        break
+        # break
       else:
         print("Error, wrong password")
         login()
@@ -107,19 +94,50 @@ def create_quote():
   print("Categories: 1. Motivation | 2. Fun | 3. Love | 4. Custom")
   cat_sel = input("What category is your Quotable?")
   quote_text = input("Type in your quote:")
+
   if cat_sel == '1':
     quote_saved['Motiv'] += [quote_text]
     print("Now that's Quotable!")
-  if cat_sel == '2':
+  elif cat_sel == '2':
     quote_saved['Fun'] += [quote_text]
     print("Now that's Quotable!")
-  if cat_sel == '3':
+  elif cat_sel == '3':
     quote_saved['Love'] += [quote_text]
+    print(quote_saved['Love'])
     print("Now that's Quotable!")
-  if cat_sel == '4':
+  elif cat_sel == '4':
     custom_cat = input("Name of new category?")
     quote_saved['Custom'] += [[quote_text,custom_cat]]
     print("Now that's Quotable!")
+  else:
+    print("Error, that category is not an option.")
+    create_quote()
+
+
+def view_saved():
+  print("See 1. Liked | 2. Favorited | 3. User Made")
+  query = input("Which would you like to see? ")
+  if query == '1':
+    print("You liked:", quote_saved['Liked'])
+  if query == '2':
+    print("You favorited:", quote_saved['Favorited'])
+  if query == '3':
+    print("1. Motivation | 2. Fun | 3. Love | 4. Custom")
+    loca = input("What type of quote do you want to see?")
+    if loca == '1':
+      print("You made:", quote_saved['Motiv'])
+    if loca == '2':
+      print("You made:", quote_saved['Fun'])
+    if loca == '3':
+      print("You made:", quote_saved['Love'])
+    if loca == '4':
+      print("You made:", quote_saved['Custom'])
+
+def search():
+  print("Search for Quotes that you have interacted with!")
+  # term = input("Keyword Query:")
+  # if term in range(len())
+  pass
 
 def menu():
   global name
@@ -127,20 +145,23 @@ def menu():
   choice = input("What would you like to do?")
   if choice == '1':
     createAcc()
-  if choice == '2':
+  elif choice == '2':
     login()
+  else:
+    print('error')
 menu()
 
 def main():
+  pass
   while True:
-    print("Logged in, welcome! 1. Feed | 2. Create Quotes | 3. Delete Account | 4. Account Options ")
+    print("1. Feed | 2. Create Quotes | 3. View Interactions | 4. Settings ")
     choice = input("What would you like to do?")
     if choice == '1':
       quote_display()
     if choice == '2':
-      create_quote
+      create_quote()
     if choice == '3':
-      del_Acc()
+      view_saved()
     if choice == '4':
-      print("accounts:", accounts)
+      pass
 main()
